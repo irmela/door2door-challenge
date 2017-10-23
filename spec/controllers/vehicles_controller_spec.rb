@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe VehiclesController, type: :controller do
-
   describe 'POST #create' do
-    let(:valid_attributes) { {id: 'd891bd56-d3d9-4a42-bb75-32545747f495'} }
+    let(:valid_attributes) { { id: 'd891bd56-d3d9-4a42-bb75-32545747f495' } }
 
     context 'when the request is valid' do
       it 'creates a vehicle' do
-        expect{ post :create, params: valid_attributes }.to change(Vehicle,:count).by(1)
+        expect { post :create, params: valid_attributes }.to change(Vehicle, :count).by(1)
       end
 
       it 'returns status code 204' do
@@ -21,5 +20,4 @@ RSpec.describe VehiclesController, type: :controller do
       end
     end
   end
-
 end
