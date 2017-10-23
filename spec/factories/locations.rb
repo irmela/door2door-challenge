@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :location do
-    latitude 51.2
-    longitude 45.3
-    time '2017-10-23 18:24:00'
+    lat 51.2
+    lng 45.3
+    at '2017-10-23 18:24:00'
     vehicle
   end
 end
