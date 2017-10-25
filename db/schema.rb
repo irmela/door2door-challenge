@@ -10,25 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_171_023_162_400) do
+ActiveRecord::Schema.define(version: 20171025065230) do
+
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'locations', force: :cascade do |t|
-    t.float 'lat'
-    t.float 'lng'
-    t.datetime 'at'
-    t.bigint 'vehicle_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['vehicle_id'], name: 'index_locations_on_vehicle_id'
+  create_table "locations", force: :cascade do |t|
+    t.float "lat"
+    t.float "lng"
+    t.datetime "at"
+    t.bigint "vehicle_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["vehicle_id"], name: "index_locations_on_vehicle_id"
   end
 
-  create_table 'vehicles', force: :cascade do |t|
-    t.string 'uuid'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "vehicles", force: :cascade do |t|
+    t.string "uuid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "moving"
   end
 
-  add_foreign_key 'locations', 'vehicles'
+  add_foreign_key "locations", "vehicles"
 end

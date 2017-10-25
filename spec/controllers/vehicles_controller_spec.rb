@@ -13,6 +13,7 @@ RSpec.describe VehiclesController, type: :controller do
     context 'when the request is valid' do
       it 'creates a vehicle' do
         expect { post :create }.to change(Vehicle, :count).by(1)
+        expect(Vehicle.last.moving).to be_truthy
       end
 
       it 'returns status code 204' do
@@ -23,6 +24,16 @@ RSpec.describe VehiclesController, type: :controller do
       it 'returns empty response body' do
         post :create, params: valid_attributes
         expect(response.body).to be_empty
+      end
+    end
+
+    context 'when a vehicle with same uuid already exists' do
+      let!(:vehicle) { create(:vehicle, uuid: 'd891bd56-d3d9-4a42-bb75-32545747f495', moving: false) }
+
+      it 'creates a vehicle' do
+        expect(Vehicle.last.moving).to be_falsy
+        expect { post :create }.to change(Vehicle, :count).by(0)
+        expect(Vehicle.last.moving).to be_truthy
       end
     end
   end
