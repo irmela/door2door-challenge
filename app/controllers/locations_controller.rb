@@ -1,6 +1,8 @@
 class LocationsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  before_action :parse_request_params, only: :create
+
   def create
     Location.create(location_params.merge(vehicle: find_vehicle))
   end
