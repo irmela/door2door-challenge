@@ -43,7 +43,7 @@ RSpec.describe VehiclesController, type: :controller do
     let!(:vehicle) { create(:vehicle, uuid: vehicle_uuid, moving: true) }
     let(:valid_attributes) do
       {
-        id: 'd891bd56-d3d9-4a42-bb75-32545747f495',
+        id: 'd891bd56-d3d9-4a42-bb75-32545747f495'
       }
     end
 

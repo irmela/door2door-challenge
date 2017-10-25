@@ -5,14 +5,14 @@ class VehiclesController < ApplicationController
 
   def create
     if @vehicle
-      @vehicle.update_column(:moving, true)
+      @vehicle.update(moving: true)
     else
       @vehicle = Vehicle.create(uuid: vehicle_params[:id], moving: true)
     end
   end
 
   def destroy
-    @vehicle.update_column(:moving, false) if @vehicle
+    @vehicle.update(moving: false) if @vehicle
   end
 
   private
