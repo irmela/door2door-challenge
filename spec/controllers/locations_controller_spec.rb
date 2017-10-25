@@ -4,17 +4,22 @@ RSpec.describe LocationsController, type: :controller do
   describe 'POST #create' do
     let(:vehicle_uuid) { 'd891bd56-d3d9-4a42-bb75-32545747f495' }
     let!(:vehicle) { create(:vehicle, uuid: vehicle_uuid) }
-    let(:valid_attributes) { { lat: 10.0, lng: 20.0, at: '2017-09-01T12:00:00Z', vehicle_uuid: vehicle_uuid } }
-
-    before do
-      @request.env['RAW_POST_DATA'] = valid_attributes.to_json
+    let(:valid_attributes) do
+      {
+        vehicle_uuid: vehicle_uuid,
+        location: {
+          lat: 10.0,
+          lng: 20.0,
+          at: '2017-09-01T12:00:00Z'
+        }
+      }
     end
 
     it { should route(:post, "/vehicles/#{vehicle_uuid}/locations").to(action: :create, vehicle_uuid: vehicle_uuid) }
 
     context 'when the request is valid' do
       it 'creates a location' do
-        expect { post :create, params: { vehicle_uuid: vehicle_uuid } }.to change(Location, :count).by(1)
+        expect { post :create, params: valid_attributes }.to change(Location, :count).by(1)
         location = Location.last
         expect(location.lat).to eq(10.0)
         expect(location.lng).to eq(20.0)

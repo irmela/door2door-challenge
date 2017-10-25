@@ -1,8 +1,6 @@
 class LocationsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_action :parse_request_params, only: :create
-
   def create
     Location.create(location_params.merge(vehicle: find_vehicle))
   end
@@ -10,7 +8,7 @@ class LocationsController < ApplicationController
   private
 
   def location_params
-    params.permit(:lat, :lng, :at)
+    params.require(:location).permit(:lat, :lng, :at)
   end
 
   def find_vehicle

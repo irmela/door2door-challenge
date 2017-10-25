@@ -1,7 +1,6 @@
 class VehiclesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_action :parse_request_params, only: :create
   before_action :set_vehicle
 
   def create
@@ -15,7 +14,7 @@ class VehiclesController < ApplicationController
   private
 
   def vehicle_params
-    params.permit(:id)
+    params.require(:vehicle).permit(:id)
   end
 
   def set_vehicle
