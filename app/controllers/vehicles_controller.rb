@@ -11,6 +11,10 @@ class VehiclesController < ApplicationController
     end
   end
 
+  def destroy
+    @vehicle.update_column(:moving, false) if @vehicle
+  end
+
   private
 
   def vehicle_params
