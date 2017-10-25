@@ -4,7 +4,7 @@ RSpec.describe VehiclesController, type: :controller do
   describe 'POST #create' do
     let(:valid_attributes) do
       {
-        vehicle: { id: 'd891bd56-d3d9-4a42-bb75-32545747f495' }
+        id: 'd891bd56-d3d9-4a42-bb75-32545747f495'
       }
     end
 

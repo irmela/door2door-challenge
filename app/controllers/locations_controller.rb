@@ -12,6 +12,6 @@ class LocationsController < ApplicationController
   end
 
   def find_vehicle
-    Vehicle.where(uuid: params[:vehicle_uuid]).first
+    Vehicle.where(uuid: params[:vehicle_id]).first
   end
 end

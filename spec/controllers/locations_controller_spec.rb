@@ -6,7 +6,7 @@ RSpec.describe LocationsController, type: :controller do
     let!(:vehicle) { create(:vehicle, uuid: vehicle_uuid) }
     let(:valid_attributes) do
       {
-        vehicle_uuid: vehicle_uuid,
+        vehicle_id: vehicle_uuid,
         location: {
           lat: 10.0,
           lng: 20.0,
@@ -15,7 +15,7 @@ RSpec.describe LocationsController, type: :controller do
       }
     end
 
-    it { should route(:post, "/vehicles/#{vehicle_uuid}/locations").to(action: :create, vehicle_uuid: vehicle_uuid) }
+    it { should route(:post, "/vehicles/#{vehicle_uuid}/locations").to(action: :create, vehicle_id: vehicle_uuid) }
 
     context 'when the request is valid' do
       it 'creates a location' do

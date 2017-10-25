@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :vehicles, only: :create, param: :uuid do
+  resources :vehicles, only: :create do
     resources :locations, only: :create
   end
 
