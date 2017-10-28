@@ -32,6 +32,14 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Render components in views or controller actions. Server-side rendering powered by ExecJS. Transform JSX in the asset pipeline or use Webpacker
+gem 'react-rails', '~> 2.4'
+
+# JavaScript library for mobile-friendly interactive maps
+gem 'rails-assets-leaflet', source: 'https://rails-assets.org'
+# Promise based HTTP client for the browser and node.js
+gem 'rails-assets-axios', source: 'https://rails-assets.org'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
