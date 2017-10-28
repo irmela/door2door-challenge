@@ -1,6 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe VehiclesController, type: :controller do
+
+  describe 'GET #index' do
+    let!(:vehicle1) { create(:vehicle, uuid: 'd891bd56-d3d9-4a42-bb75-32545747f495') }
+    let!(:vehicle2) { create(:vehicle, uuid: '8138787c-bbca-11e7-abc4-cec278b6b50a') }
+
+    it { should route(:get, '/vehicles').to(action: :index) }
+
+    it 'returns vehicles' do
+      post :index
+      expect(JSON.parse(response.body)).not_to be_empty
+      expect(JSON.parse(response.body).size).to eq(2)
+    end
+
+    it 'returns status code 200' do
+      post :index
+      expect(response).to have_http_status(200)
+    end
+  end
+
   describe 'POST #create' do
     let(:valid_attributes) do
       {

@@ -3,6 +3,14 @@ class VehiclesController < ApplicationController
 
   before_action :set_vehicle
 
+  def index
+    @vehicles = Vehicle.includes(:locations).where(moving: true)
+    render json: @vehicles,
+           include: { locations: { except: %i[created_at updated_at] } },
+           except: %i[created_at updated_at],
+           status: :ok
+  end
+
   def create
     if @vehicle
       @vehicle.update(moving: true)
