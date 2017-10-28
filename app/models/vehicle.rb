@@ -1,5 +1,5 @@
 class Vehicle < ApplicationRecord
-  has_many :locations, dependent: :destroy
+  has_many :locations, -> { order(:at) }, dependent: :destroy
 
   validates :uuid, uniqueness: true, presence: true
 
