@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-  resources :vehicles, only: [:create, :destroy] do
+  root 'map#index'
+
+  resources :vehicles, only: [:index, :create, :destroy] do
     resources :locations, only: :create
   end
+
+  get 'map/index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
