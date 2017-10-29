@@ -17,6 +17,13 @@ class VehicleMap extends React.Component {
     return `<span class="Marker Marker--pin" style="background-color: ${color}"></span>`
   }
 
+  buildPopup(vehicle) {
+    latestLocation = vehicle.locations.slice(-1).pop();
+    return `<b>Vehicle:</b> ${vehicle.uuid}<br />
+            <b>Time:</b> ${latestLocation.at}<br />
+            <b>Position:</b> ${latestLocation.lat}, ${latestLocation.lng}`
+  }
+
   addVehiclePath(map, vehicle, boundary) {
     let color = this.generateColor(vehicle.uuid);
 
@@ -31,7 +38,7 @@ class VehicleMap extends React.Component {
 
       if (L.latLng(latestCoords).distanceTo(d2dOffice) <= radius) {
         L.polyline(coords, { color: color, weight: 4 }).addTo(this.vehicleLayers);
-        L.marker(latestCoords, {icon: icon}).addTo(this.vehicleLayers);
+        L.marker(latestCoords, {icon: icon}).bindPopup(this.buildPopup(vehicle)).addTo(this.vehicleLayers);
       } else {
         this.deregisterVehicle(vehicle.uuid)
       }
