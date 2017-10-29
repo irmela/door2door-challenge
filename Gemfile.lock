@@ -164,6 +164,8 @@ GEM
       sprockets-rails (>= 2.0.0)
     rails-assets-axios (0.17.0)
     rails-assets-leaflet (1.2.0)
+    rails-assets-leaflet.markercluster (1.1.0)
+      rails-assets-leaflet (>= 1.0.3)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -307,6 +309,7 @@ DEPENDENCIES
   rails (~> 5.1.4)
   rails-assets-axios!
   rails-assets-leaflet!
+  rails-assets-leaflet.markercluster!
   react-rails (~> 2.4)
   rspec-rails (~> 3.7, >= 3.7.1)
   rubocop (~> 0.51.0)

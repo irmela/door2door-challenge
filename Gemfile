@@ -37,6 +37,8 @@ gem 'react-rails', '~> 2.4'
 
 # JavaScript library for mobile-friendly interactive maps
 gem 'rails-assets-leaflet', source: 'https://rails-assets.org'
+# Marker Clustering plugin for Leaflet.
+gem 'rails-assets-leaflet.markercluster', source: 'https://rails-assets.org'
 # Promise based HTTP client for the browser and node.js
 gem 'rails-assets-axios', source: 'https://rails-assets.org'
 

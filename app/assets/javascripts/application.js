@@ -13,6 +13,7 @@
 //= require rails-ujs
 //= require turbolinks
 //= require leaflet
+//= require leaflet.markercluster
 //= require axios
 //= require react
 //= require react_ujs

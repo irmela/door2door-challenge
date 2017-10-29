@@ -1,54 +1,94 @@
+const radius = 3500;
+const d2dOffice = [52.53, 13.403];
+
 class VehicleMap extends React.Component {
-  generateColor() {
-    let r = Math.floor(Math.random() * 255);
-    let g = Math.floor(Math.random() * 255);
-    let b = Math.floor(Math.random() * 255);
-    return "rgb("+r+" ,"+g+","+ b+")";
+  constructor(props) {
+    super(props);
+    this.state = {
+      vehicles: []
+    };
   }
 
-  pinMarkup(color) {
-    return `<span class="Marker" style="background-color: ${color}"></span>`
+  generateColor(uuid) {
+    return '#' + uuid.substring(1,7);
   }
 
-  addVehiclePath(map, vehicle) {
-    let color = this.generateColor();
+  buildPinMarker(color) {
+    return `<span class="Marker Marker--pin" style="background-color: ${color}"></span>`
+  }
+
+  addVehiclePath(map, vehicle, boundary) {
+    let color = this.generateColor(vehicle.uuid);
 
     let icon = L.divIcon({
       className: '',
-      html: this.pinMarkup(color)
+      html: this.buildPinMarker(color)
     });
 
     if (vehicle.locations.length) {
       let coords = Array.prototype.map.call(vehicle.locations, l => [l.lat, l.lng]);
+      let latestCoords = coords.slice(-1).pop();
 
-      let line = L.polyline(coords, { color: color, weight: 4 });
-      let marker = L.marker(coords.slice(-1).pop(), {icon: icon})
-      let vehiclePath = L.layerGroup([line, marker]);
-
-      map.addLayer(vehiclePath);
+      if (L.latLng(latestCoords).distanceTo(d2dOffice) <= radius) {
+        L.polyline(coords, { color: color, weight: 4 }).addTo(this.vehicleLayers);
+        L.marker(latestCoords, {icon: icon}).addTo(this.vehicleLayers);
+      } else {
+        this.deregisterVehicle(vehicle.uuid)
+      }
     }
   }
 
-  componentDidUpdate() {
-    let map = L.map('map').setView([52.53, 13.403], 13);
+  addVehicles() {
+    for (var index = 0; index < this.state.vehicles.length; index++) {
+      let vehicle = this.state.vehicles[index];
+
+      this.addVehiclePath(this.map, vehicle, this.boundary)
+    }
+  }
+
+  buildMap() {
+    var map = this.map = L.map('map').setView(d2dOffice, 13);
 
     L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    for (var index = 0; index < this.state.vehicles.length; index++) {
-      let vehicle = this.state.vehicles[index];
+    let homeIcon = L.divIcon({className: 'Marker Marker--home', iconSize: [40, 40]});
+    L.marker(d2dOffice, {icon: homeIcon}).addTo(map);
 
-      this.addVehiclePath(map, vehicle)
-    }
+    this.boundary = L.circle(d2dOffice, {radius: 3500, color: '#003552'}).addTo(map);
+
+    this.vehicleLayers = L.markerClusterGroup().addTo(map);
   }
 
-  componentDidMount() {
+  getVehicles() {
     axios.get('/vehicles.json')
       .then(res => {
         const vehicles = res.data;
         this.setState({ vehicles });
+      })
+      .catch(function (error) {
+        console.log(error);
       });
+  }
+
+  deregisterVehicle(uuid) {
+    axios.delete(`/vehicles/${uuid}`)
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  componentDidMount(){
+    this.buildMap();
+
+    this.timer = setInterval(()=> this.getVehicles(), 3000)
+  }
+
+  componentWillUpdate() {
+    // ToDo: only update when vehicle state changed
+    this.vehicleLayers.clearLayers();
+    this.addVehicles(this.map);
   }
 
   render() {
