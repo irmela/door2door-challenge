@@ -37,10 +37,12 @@ class VehicleMap extends React.Component {
       let latestCoords = coords.slice(-1).pop();
 
       if (L.latLng(latestCoords).distanceTo(d2dOffice) <= radius) {
+        if (!vehicle.moving) this.registerVehicle(vehicle)
+
         L.polyline(coords, { color: color, weight: 4 }).addTo(this.vehicleLayers);
         L.marker(latestCoords, {icon: icon}).bindPopup(this.buildPopup(vehicle)).addTo(this.vehicleLayers);
       } else {
-        this.deregisterVehicle(vehicle.uuid)
+        if (vehicle.moving) this.deregisterVehicle(vehicle)
       }
     }
   }
@@ -79,8 +81,16 @@ class VehicleMap extends React.Component {
       });
   }
 
-  deregisterVehicle(uuid) {
-    axios.delete(`/vehicles/${uuid}`)
+
+  registerVehicle(vehicle) {
+    axios.post('/vehicles', { id: vehicle.uuid })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  deregisterVehicle(vehicle) {
+    axios.delete(`/vehicles/${vehicle.uuid}`)
       .catch(function (error) {
         console.log(error);
       });

@@ -4,7 +4,7 @@ class VehiclesController < ApplicationController
   before_action :set_vehicle
 
   def index
-    @vehicles = Vehicle.includes(:locations).where(moving: true)
+    @vehicles = Vehicle.includes(:locations)
     render json: @vehicles,
            include: { locations: { except: %i[created_at updated_at] } },
            except: %i[created_at updated_at],
