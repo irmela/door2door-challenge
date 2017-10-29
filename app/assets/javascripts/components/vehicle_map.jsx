@@ -63,7 +63,7 @@ class VehicleMap extends React.Component {
     let homeIcon = L.divIcon({className: 'Marker Marker--home', iconSize: [40, 40]});
     L.marker(d2dOffice, {icon: homeIcon}).addTo(map);
 
-    this.boundary = L.circle(d2dOffice, {radius: 3500, color: '#003552'}).addTo(map);
+    this.boundary = L.circle(d2dOffice, {radius: radius, color: '#003552'}).addTo(map);
 
     this.vehicleLayers = L.markerClusterGroup().addTo(map);
   }
