@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'map#index'
 
-  resources :vehicles, only: [:index, :create, :destroy] do
+  resources :vehicles, only: %i[index create destroy] do
     resources :locations, only: :create
   end
 
