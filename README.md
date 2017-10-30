@@ -1,6 +1,7 @@
 # README
 
-![vehicle map](https://github.com/irmela/door2door-challenge/raw/master/vehicle_map.gif)
+
+<img src="https://github.com/irmela/door2door-challenge/raw/master/vehicle_map.gif" alt="vehicle map" width="400px">
 
 ## Setup
 
@@ -22,12 +23,12 @@
 * Use [my fork](https://github.com/irmela/fullstack-code-challenge) of the driver-simulator. See [PR #6](https://github.com/door2door-io/fullstack-code-challenge/pull/6)
 
 ## Stack
-I used **rails 5** since this is my framework of choice. The map is build with **leaflet** because it's flexible and well documented and I already had some experience with it. Although I think it could have been easily done without react, I wrapped it in a **react** component because for future features I think using react would be an advantage and of course because I was curiouse to learn more react.
+I used **rails 5** since this is my framework of choice. The map is build with **leaflet** because it's flexible and well documented and I already had some experience with it. Although, I think it could have been easily done without react, I wrapped it in a **react** component because for future features I think using react would be an advantage and of course because I was curiouse to learn more react.
 
 ## What's missing
 Of course there is still a lot to do. This is just a first MVP. For next iterations I would work on the following:
 * Add frontend specs
-* Only update/rebuild map only when state.vehicle changed
+* Only update/rebuild map when state.vehicle changed
 * Improve logic to fetch new vehicle locations (ActionCable?)
 * Improve performance to handle more requests
 
